@@ -6,17 +6,16 @@ public class Player : MonoBehaviour
 {
    
         
-    [SerializeField]                    //using SerializeField attribute 
-                                        //with private variables
-    private float _speed = 10.0f;       //allows them to be seen in the Inspector
-    
+    [SerializeField]                    //using SerializeField attribute with private variables allows them to be seen in the Inspector
+    private float _speed = 10.0f;       
     [SerializeField]
     private GameObject _laserPrefab;    // use underscore to denote private variables
-    
     [SerializeField]
     private Vector3 laserOffset = new Vector3(0, 0.8f, 0);
-
-
+    [SerializeField] 
+    private float _fireRate = 0.5f;
+    [SerializeField]
+    private float _nextFire = 0; 
 
     // Start is called before the first frame update
     void Start()
@@ -30,13 +29,10 @@ public class Player : MonoBehaviour
     {
       CalculateMovement();
 
-      //if space bar pressed 
-      //then spawn game object
-
-      if(Input.GetKeyDown(KeyCode.Space))
+      if(Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)  // checks if time is greater than nextFire. calls FireLaser() if true.
       {
-        Instantiate(_laserPrefab, transform.position+laserOffset, Quaternion.identity);                                                                //Debug.Log("Space Key Pressed");
-      }
+        FireLaser();
+      } 
     }   
 
     void CalculateMovement()
@@ -64,8 +60,13 @@ public class Player : MonoBehaviour
          else if(transform.position.x < -11.3f)
          {
          transform.position = new Vector3(11.3f, transform.position.y, 0);
+         }
     }
-}
-    
-        
+
+    void FireLaser()
+    {
+        // assigns value of nextFire to current time + fireRate and instantiates laser one time.
+        _nextFire = Time.time + _fireRate;
+        Instantiate(_laserPrefab, transform.position+laserOffset, Quaternion.identity); 
+    }       
 }
