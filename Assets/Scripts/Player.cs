@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    //Public or private reference
-    //data type (int, float, bool, string)
-    //every variable has a name
-    //optional value assigned
+   
         
-    [SerializeField]                    //using SerializeField attribute with private variables
+    [SerializeField]                    //using SerializeField attribute 
+                                        //with private variables
     private float _speed = 10.0f;       //allows them to be seen in the Inspector
     
     [SerializeField]
     private GameObject _laserPrefab;    // use underscore to denote private variables
     
+    [SerializeField]
+    private Vector3 laserOffset = new Vector3(0, 0.8f, 0);
 
 
 
@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
 
       if(Input.GetKeyDown(KeyCode.Space))
       {
-        Instantiate(_laserPrefab, transform.position, Quaternion.identity);                                                                //Debug.Log("Space Key Pressed");
+        Instantiate(_laserPrefab, transform.position+laserOffset, Quaternion.identity);                                                                //Debug.Log("Space Key Pressed");
       }
     }   
 
@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
          transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
 
         // Horizontal postion wrapping
+        
         
          if(transform.position.x > 11.3f)
          {
