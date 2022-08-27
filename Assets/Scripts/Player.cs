@@ -16,17 +16,19 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.5f;
     [SerializeField]
     private float _nextFire = 0; 
-
+    [SerializeField]
+    //private GameObject _enemyPrefab;
     // Start is called before the first frame update
     void Start()
     {
         // take the current position and assign it a start position =new position (0,0,0)
         transform.position = new Vector3(0, 0, 0);
+        
     }
 
     // Update is called once per frame
     void Update() 
-    {
+    {   //SpawnEnemy();
       CalculateMovement();
 
       if(Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)  // checks if time is greater than nextFire. calls FireLaser() if true.
@@ -68,5 +70,11 @@ public class Player : MonoBehaviour
         // assigns value of nextFire to current time + fireRate and instantiates laser one time.
         _nextFire = Time.time + _fireRate;
         Instantiate(_laserPrefab, transform.position+laserOffset, Quaternion.identity); 
-    }       
+    }
+    
+   /* void SpawnEnemy()
+    {   
+        var position = new Vector3(Random.Range(-11.3f, 11.3f), 0, Random.Range(-11.3f, 11.3f));
+        Instantiate(_enemyPrefab, position, Quaternion.identity);
+    }*/
 }
