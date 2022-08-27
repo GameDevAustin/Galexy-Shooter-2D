@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _nextFire = 0; 
     [SerializeField]
+    private int _lives = 3;
+
     //private GameObject _enemyPrefab;
     // Start is called before the first frame update
     void Start()
@@ -72,9 +74,16 @@ public class Player : MonoBehaviour
         Instantiate(_laserPrefab, transform.position+laserOffset, Quaternion.identity); 
     }
     
-   /* void SpawnEnemy()
-    {   
-        var position = new Vector3(Random.Range(-11.3f, 11.3f), 0, Random.Range(-11.3f, 11.3f));
-        Instantiate(_enemyPrefab, position, Quaternion.identity);
-    }*/
+    public void Damage()
+    {
+           _lives -= 1;
+
+           // check if dead
+
+           if (_lives < 1)
+           {
+              Destroy(this.gameObject);
+           }
+    }
+ 
 }

@@ -28,12 +28,42 @@ public class Enemy : MonoBehaviour
        
         if(transform.position.y < -5.4f)
         {   
-            transform.position = new Vector3(Random.Range(-11.3f, 11.3f), 7.4f, 0);
+            transform.position = new Vector3(Random.Range(-9.45f, 9.45f), 7.4f, 0);
         }
     }
 
-                
+    private void OnTriggerEnter(Collider other)          
+    {
+        /*
+        if other is player
+        damage player 
+        destroy us 
+        */
+        if (other.tag == "Player")
+        {
+           Player player = other.transform.GetComponent<Player>();
 
+            if (player != null)
+            {
+                player.Damage();
+            }
+            
+            
+            Destroy(this.gameObject);
+        }
+
+
+        /*
+        if other is laser
+        destroy laser
+        destroy us
+        */
+        if (other.tag == "Laser")
+        { 
+           Destroy(other.gameObject);
+           Destroy(this.gameObject);
+        }
+    }
        
 
   
