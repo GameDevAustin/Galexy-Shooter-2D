@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     // variables
     void Start()
     {
-         
+         transform.position = new Vector3(0, 7.4f, 0);
     }
     
   
@@ -23,45 +23,36 @@ public class Enemy : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {  
+    {  //Enemy moves down on spawn
         transform.Translate (Vector3.down * _speed * Time.deltaTime);
        
         if(transform.position.y < -5.4f)
-        {   
+        {   //Random spawn
             transform.position = new Vector3(Random.Range(-9.45f, 9.45f), 7.4f, 0);
         }
     }
 
     private void OnTriggerEnter(Collider other)          
     {
-        /*
-        if other is player
-        damage player 
-        destroy us 
-        */
+       //checking for collision from player
+       //null checking
+
         if (other.tag == "Player")
         {
            Player player = other.transform.GetComponent<Player>();
 
-            if (player != null)
-            {
+           if (player != null)
+           {
                 player.Damage();
-            }
-            
-            
-            Destroy(this.gameObject);
+           }
+           Destroy(this.gameObject);
         }
+       //checking for collision from laser 
 
-
-        /*
-        if other is laser
-        destroy laser
-        destroy us
-        */
         if (other.tag == "Laser")
         { 
-           Destroy(other.gameObject);
-           Destroy(this.gameObject);
+         Destroy(other.gameObject);
+         Destroy(this.gameObject);
         }
     }
        

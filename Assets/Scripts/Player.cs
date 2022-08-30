@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-   
+    //variables
         
     [SerializeField]                    //using SerializeField attribute with private variables allows them to be seen in the Inspector
     private float _speed = 10.0f;       
@@ -75,7 +75,8 @@ public class Player : MonoBehaviour
     }
     
     public void Damage()
-    {
+    {   // subtract one from _lives every time its called
+
            _lives -= 1;
 
            // check if dead

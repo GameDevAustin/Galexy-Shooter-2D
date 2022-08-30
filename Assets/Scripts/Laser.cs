@@ -7,6 +7,7 @@ public class Laser : MonoBehaviour
    //speed variable 
         [SerializeField]
         private float _speed = 10.0f;
+        [SerializeField]
         
       
 
