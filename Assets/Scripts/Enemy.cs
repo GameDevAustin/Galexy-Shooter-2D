@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     // variables
     void Start()
     {
-         transform.position = new Vector3(0, 7.4f, 0);
+        
     }
     
   
@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)          
+    private void OnTriggerEnter2D(Collider2D other)          
     {
        //checking for collision from player
        //null checking
