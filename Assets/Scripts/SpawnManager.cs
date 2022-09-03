@@ -16,13 +16,13 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         _spawn = SpawnRoutine(5.0f);
-       StartCoroutine(_spawn);
+        StartCoroutine(_spawn);
     }
 
     // Update is called once per frame
     void Update()
     {
-      
+    
     }
 
     //spawn game objects every 5 seconds
@@ -31,29 +31,17 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnRoutine(float delay)
     {
-      
       // yield return null; will wait one frame before executing next line
-
       while (_stopSpawn == false)
       {
        Vector3 spawnPos = new Vector3(Random.Range(-9.45f, 9.45f), 7.4f, 0);
-       
        GameObject newEnemy = Instantiate(_enemyPrefab, spawnPos, Quaternion.identity);
        newEnemy.transform.parent = _enemyContainer.transform;
        yield return new WaitForSeconds(delay);
-
       }
-
     }
     public void OnPlayerDeath()
     {
-        _stopSpawn = true;
-
+       _stopSpawn = true;
     }
-
-
-
-
-
-
 }
