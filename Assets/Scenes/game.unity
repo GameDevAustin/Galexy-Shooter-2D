@@ -322,6 +322,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1348896644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1348896645}
+  m_Layer: 0
+  m_Name: Power Up Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1348896645
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348896644}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2066788818}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1673041332
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,7 +477,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 896750893767714241, guid: 1eba17ca6d8c8b944b4cd124ae861f08, type: 3}
+  _tripleShotPrefab: {fileID: 1160320524275701125, guid: b86af4532267b5445aec4be3f962c93c, type: 3}
   _enemyContainer: {fileID: 95223134}
+  _powerUpContainer: {fileID: 1348896644}
 --- !u!4 &2066788818
 Transform:
   m_ObjectHideFlags: 0
@@ -460,6 +493,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 95223135}
+  - {fileID: 1348896645}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -496,10 +530,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _laserPrefab: {fileID: 6309360898992012296, guid: 5c5c2bbbcb016f949bacdbaac188623a, type: 3}
-  laserOffset: {x: 0, y: 0.8, z: 0}
+  _tripleShotPrefab: {fileID: 5870512574280287383, guid: cb838fa5a18015840b756669698b4d1c, type: 3}
+  _laserOffset: {x: 0, y: 1.013, z: 0}
   _fireRate: 0.15
   _nextFire: 0
   _lives: 3
+  _isTripleShotActive: 0
 --- !u!212 &2079147884
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -560,7 +596,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2079147882}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1265, y: 0.0562, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []

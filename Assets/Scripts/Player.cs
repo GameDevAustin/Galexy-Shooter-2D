@@ -10,7 +10,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _laserPrefab;    // use underscore to denote private variables
     [SerializeField]
-    private Vector3 _laserOffset = new Vector3(0, 1.013f, 0);
+    private GameObject _tripleShotPrefab;
+    [SerializeField]
+    private Vector3 _laserOffset = new Vector3(0, 1.0f, 0);
     [SerializeField] 
     private float _fireRate = 0.5f;
     [SerializeField]
@@ -18,6 +20,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _lives = 3;
     private SpawnManager _spawnManager; 
+    
+    [SerializeField]
+    private bool _isTripleShotActive = false;
+   
+    
 
     //private GameObject _enemyPrefab;
     // Start is called before the first frame update
@@ -66,9 +73,23 @@ public class Player : MonoBehaviour
     {
         // assigns value of nextFire to current time + fireRate and instantiates laser one time.
         _nextFire = Time.time + _fireRate;
-        Instantiate(_laserPrefab, transform.position+_laserOffset, Quaternion.identity); 
+         
+
+        
+        //if tripleshotActive is true.
+        //fire three lasers. (triple shot prefab)
+        if (_isTripleShotActive == true)
+        {
+          Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+        }
+        //else fire one laser
+        else
+        {
+         Instantiate(_laserPrefab, transform.position+_laserOffset, Quaternion.identity);
+        }
     }
-      public void Damage()
+    
+    public void Damage()
     {   
         // subtract one from _lives every time its called
         _lives -= 1;
@@ -79,5 +100,10 @@ public class Player : MonoBehaviour
          Destroy(this.gameObject);
         }
     }
- 
+    
+    public void Powerup()
+    {
+        _isTripleShotActive = true;
+           
+    }
 }
