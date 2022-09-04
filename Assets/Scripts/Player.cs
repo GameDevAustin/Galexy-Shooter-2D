@@ -20,14 +20,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _lives = 3;
     private SpawnManager _spawnManager; 
-    
     [SerializeField]
-    private bool _isTripleShotActive = false;
-   
-    
+    private bool _isTripleShotActive = false;   
 
-    //private GameObject _enemyPrefab;
-    // Start is called before the first frame update
     void Start()
     {
         // take the current position and assign it a start position =new position (0,0,0)
@@ -35,13 +30,12 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();// find gameObject then get component.
         if(_spawnManager == null)
         {
-            Debug.LogError("The Spawn Manager is NULL");
+           Debug.LogError("The Spawn Manager is NULL");
         }
     }
-    // Update is called once per frame
+
     void Update() 
     {
-      //SpawnEnemy();
       CalculateMovement();
       if(Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)  // checks if time is greater than nextFire. calls FireLaser() if true.
       {
@@ -55,10 +49,9 @@ public class Player : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 move = new Vector3(horizontalInput, verticalInput, 0);
         transform.Translate(move *_speed * Time.deltaTime);  // combines Horizontaland Vertical translation to one line
-        // Vertical position limits
+        
         // use clamping function in place of if statements to set boundries where possible
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
-
         // Horizontal postion wrapping
         if(transform.position.x > 11.3f)
         {
@@ -69,41 +62,41 @@ public class Player : MonoBehaviour
          transform.position = new Vector3(11.3f, transform.position.y, 0);
         }
     }
+
     void FireLaser()
     {
-        // assigns value of nextFire to current time + fireRate and instantiates laser one time.
-        _nextFire = Time.time + _fireRate;
+       _nextFire = Time.time + _fireRate;
          
-
-        
-        //if tripleshotActive is true.
-        //fire three lasers. (triple shot prefab)
-        if (_isTripleShotActive == true)
-        {
+       if (_isTripleShotActive == true)
+       {
           Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
-        }
-        //else fire one laser
-        else
-        {
+       }
+       else
+       {
          Instantiate(_laserPrefab, transform.position+_laserOffset, Quaternion.identity);
-        }
+       }
     }
     
     public void Damage()
     {   
-        // subtract one from _lives every time its called
-        _lives -= 1;
-        // check if dead
-        if (_lives < 1)
-        {
+       _lives -= 1;
+        
+       if (_lives < 1)
+       {
          _spawnManager.OnPlayerDeath();
          Destroy(this.gameObject);
-        }
+       }
     }
     
-    public void Powerup()
+    public void TripleShotActive()
     {
-        _isTripleShotActive = true;
-           
+       _isTripleShotActive = true;
+       StartCoroutine(TripleShotPowerDownRoutine());
+    }
+
+    IEnumerator TripleShotPowerDownRoutine()
+    {
+       yield return new WaitForSeconds(5.0f);
+       _isTripleShotActive = false;
     }
 }

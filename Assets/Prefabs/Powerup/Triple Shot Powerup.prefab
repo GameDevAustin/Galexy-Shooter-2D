@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4043228251499528544}
   - component: {fileID: 7908943564843853498}
   - component: {fileID: 8684540178671497609}
+  - component: {fileID: 3957191061210789517}
   m_Layer: 0
   m_Name: Triple Shot Powerup
   m_TagString: tripleShot
@@ -73,8 +74,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1194220911
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ed6681d697652144a913093bf7ad1d43, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -136,3 +137,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e4eb22aa1b64a44b94170d15e9987d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 3
+--- !u!95 &3957191061210789517
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160320524275701125}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f31096e2181bb464bb8f1826beca089b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

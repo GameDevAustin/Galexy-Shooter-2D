@@ -6,18 +6,14 @@ public class Enemy : MonoBehaviour
 {   
     [SerializeField]
     private float _speed = 4.0f;
-    // variables
-    void Start()
-    {
-    }
 
-    // Update is called once per frame
     void Update()
-    {  //Enemy moves down on spawn
+    {  
         transform.Translate (Vector3.down * _speed * Time.deltaTime);
+       
         if(transform.position.y < -5.4f)
-        {   //Random spawn
-            transform.position = new Vector3(Random.Range(-9.45f, 9.45f), 7.4f, 0);
+        {   
+           transform.position = new Vector3(Random.Range(-9.45f, 9.45f), 7.4f, 0);
         }
     }
 
@@ -27,12 +23,12 @@ public class Enemy : MonoBehaviour
        //null checking
        if (other.tag == "Player")
        {
-           Player player = other.transform.GetComponent<Player>();
-           if (player != null)
-           {
-            player.Damage();
-           }
-           Destroy(this.gameObject);
+         Player player = other.transform.GetComponent<Player>();
+         if (player != null)
+         {
+           player.Damage();
+         }
+         Destroy(this.gameObject);
        }  
        //checking for collision from laser 
        if (other.tag == "Laser")

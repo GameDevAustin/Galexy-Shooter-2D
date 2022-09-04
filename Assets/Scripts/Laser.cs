@@ -9,16 +9,17 @@ public class Laser : MonoBehaviour
    private float _speed = 10.0f;
    [SerializeField]
  
-   // Update is called once per frame
    void Update()
    {
-        // translate (move) laserObject up when space bar is pressed
-        transform.Translate(Vector3.up * _speed * Time.deltaTime);
-        // if laser position is greater than 8 on the y axis 
-        // destroy object
-        if (transform.position.y > 8.0f)
-        {
-            Destroy(this.gameObject);
-        }
+     transform.Translate(Vector3.up * _speed * Time.deltaTime); 
+        // destroy objects when they leave playable area
+     if (transform.position.y > 8.0f)
+     {
+         if(transform.parent != null)
+         {
+            Destroy(transform.parent.gameObject);
+         }
+         Destroy(this.gameObject);
+     }
    }
 } 
