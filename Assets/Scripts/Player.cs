@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
-    private GameObject _playerShieldPrefab;
+    private GameObject playerShield;
     [SerializeField]
     private Vector3 _laserOffset = new Vector3(0, 1.0f, 0);
     [SerializeField] 
@@ -90,6 +90,15 @@ public class Player : MonoBehaviour
     
     public void Damage()
     {   
+        if(_isShieldActive == true)
+        {
+        _isShieldActive = false;
+          playerShield.SetActive(false);                                              //gameObject.transform.GetChild(0).gameObject.SetActive(false); also works
+        
+         return;
+        }
+
+
        _lives -= 1;
         
        if (_lives < 1)
@@ -126,10 +135,11 @@ public class Player : MonoBehaviour
           _speed /= _speedMultiplier;
     }
    
-    /*
+    
     public void ShieldActive()
     {
-        _isShieldActive = true;     
+        _isShieldActive = true;       
+         playerShield.SetActive(true);                                                                           // gameObject.transform.GetChild(0).gameObject.SetActive(true);
         StartCoroutine(ShieldPowerOffRoutine());
     }
         
@@ -137,10 +147,11 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         _isShieldActive = false;
+        playerShield.SetActive(false);
         
     } 
 
-    void ShieldOn()
+    /*void ShieldOn()
     {
         if(_isShieldActive == true)
         {   
