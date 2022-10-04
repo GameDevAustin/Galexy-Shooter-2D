@@ -7,9 +7,9 @@ public class Laser : MonoBehaviour
    //speed variable 
    [SerializeField]
    private float _speed = 10.0f;
-   [SerializeField]
- 
-   void Update()
+
+
+    void Update()
    {
      transform.Translate(Vector3.up * _speed * Time.deltaTime); 
         // destroy objects when they leave playable area
