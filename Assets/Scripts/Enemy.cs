@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     private Animator _anim; //handle to animator component
     
     private Player _player;
-
+    private Collider2D _deadEnemy;
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
@@ -40,6 +40,8 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)          
     {
+        
+
        //checking for collision from player
        //null checking
        if (other.tag == "Player")
@@ -69,6 +71,8 @@ public class Enemy : MonoBehaviour
         _anim.SetTrigger("OnEnemyDeath");
             _speed = 0;
          Destroy(this.gameObject, _delay);
+            _deadEnemy = GetComponent<BoxCollider2D>();
+            _deadEnemy.enabled = false;
        }
     }
 }
