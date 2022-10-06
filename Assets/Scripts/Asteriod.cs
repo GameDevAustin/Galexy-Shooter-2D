@@ -7,14 +7,18 @@ public class Asteriod : MonoBehaviour
      
     [SerializeField] private float _rotateSpeed = 3.0f;
     [SerializeField] private GameObject _explosionPrefab;
-   
+    private SpawnManager _spawnManager;
     
   
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        if(_spawnManager == null)
+        {
+            Debug.LogError("Spawn Manager is NULL");
+        }
        
     }
 
@@ -38,7 +42,7 @@ public class Asteriod : MonoBehaviour
        Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
        Destroy(other.gameObject);
        Destroy(this.gameObject, 0.25f);
-               
+       _spawnManager.StartSpawining();
       }
 
     }
