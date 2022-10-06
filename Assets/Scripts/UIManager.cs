@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
 
         if(_gameManager == null)
         {
-            Debug.LogError("GameManager is NULL");
+            Debug.LogError("Game_Manager is NULL");
         }
     }
 
