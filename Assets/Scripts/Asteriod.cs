@@ -7,6 +7,9 @@ public class Asteriod : MonoBehaviour
      
     [SerializeField] private float _rotateSpeed = 3.0f;
     [SerializeField] private GameObject _explosionPrefab;
+    [SerializeField] private AudioClip _explosionSound;
+
+    private AudioSource _audiosource;
     private SpawnManager _spawnManager;
     
   
@@ -14,6 +17,7 @@ public class Asteriod : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //_audiosource = GetComponent<AudioSource>();
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         if(_spawnManager == null)
         {
@@ -42,6 +46,8 @@ public class Asteriod : MonoBehaviour
        Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
        Destroy(other.gameObject);
        Destroy(this.gameObject, 0.25f);
+            //explosion audio clip
+           // _audiosource.PlayOneShot(_explosionSound);
        _spawnManager.StartSpawining();
       }
 

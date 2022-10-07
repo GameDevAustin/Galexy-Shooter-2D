@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _rightEngineFire;
 
     [SerializeField] private AudioClip _laserSound;
-    //[SerializeField] private AudioClip _powerupSound;
+    [SerializeField] private AudioClip _playerExplode;
 
     private AudioSource _audioSource;
    
@@ -148,6 +148,7 @@ public class Player : MonoBehaviour
        {
          _spawnManager.OnPlayerDeath();
          Destroy(this.gameObject);
+            _audioSource.PlayOneShot(_playerExplode);
 
        }
     }

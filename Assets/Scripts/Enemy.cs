@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {   
-    [SerializeField]
-    private float _speed = 4.0f;
+    [SerializeField] private float _speed = 4.0f;
     [SerializeField] private float _delay = 2.35f;
+    [SerializeField] private AudioClip _enemyExplode;
+
+    private AudioSource _audioSource;
+
+    
 
     private Animator _anim; //handle to animator component
     
@@ -14,6 +18,8 @@ public class Enemy : MonoBehaviour
     private Collider2D _deadEnemy;
     void Start()
     {
+        _deadEnemy = GetComponent<BoxCollider2D>();
+        _audioSource = GetComponent<AudioSource>();
         _player = GameObject.Find("Player").GetComponent<Player>();
         if (_player == null)
         {
@@ -56,6 +62,7 @@ public class Enemy : MonoBehaviour
         _anim.SetTrigger("OnEnemyDeath");
             _speed = 0;
          Destroy(this.gameObject, _delay);
+            _audioSource.PlayOneShot(_enemyExplode);
        }  
        //checking for collision from laser 
        if (other.tag == "Laser")
@@ -71,7 +78,7 @@ public class Enemy : MonoBehaviour
         _anim.SetTrigger("OnEnemyDeath");
             _speed = 0;
          Destroy(this.gameObject, _delay);
-            _deadEnemy = GetComponent<BoxCollider2D>();
+            _audioSource.PlayOneShot(_enemyExplode);
             _deadEnemy.enabled = false;
        }
     }
