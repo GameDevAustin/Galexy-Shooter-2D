@@ -144,11 +144,12 @@ public class Player : MonoBehaviour
         }
 
        _uiManager.UpdateLives(_lives);
-       if (_lives < 1)
+       if (_lives == 0)
        {
          _spawnManager.OnPlayerDeath();
+         _audioSource.PlayOneShot(_playerExplode);
          Destroy(this.gameObject);
-            _audioSource.PlayOneShot(_playerExplode);
+           
 
        }
     }

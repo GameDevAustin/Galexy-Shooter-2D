@@ -47,7 +47,7 @@ public class Asteriod : MonoBehaviour
        Destroy(other.gameObject);
        Destroy(this.gameObject, 0.25f);
             //explosion audio clip
-           // _audiosource.PlayOneShot(_explosionSound);
+       //_audiosource.PlayOneShot(_explosionSound);
        _spawnManager.StartSpawining();
       }
 

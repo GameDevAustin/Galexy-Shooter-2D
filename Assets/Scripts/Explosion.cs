@@ -12,8 +12,9 @@ public class Explosion : MonoBehaviour
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+       // _audioSource.Play();
         Destroy(this.gameObject, 3f);
-        _audioSource.PlayOneShot(_explode);
+       _audioSource.PlayOneShot(_explode);
     }
   
 }

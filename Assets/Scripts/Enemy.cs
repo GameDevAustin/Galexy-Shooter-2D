@@ -60,9 +60,11 @@ public class Enemy : MonoBehaviour
          }
             // trigger animation
         _anim.SetTrigger("OnEnemyDeath");
-            _speed = 0;
-         Destroy(this.gameObject, _delay);
-            _audioSource.PlayOneShot(_enemyExplode);
+         _speed = 0;
+         _audioSource.PlayOneShot(_enemyExplode);
+        //_audioSource.Play();
+        Destroy(this.gameObject, _delay);
+            
        }  
        //checking for collision from laser 
        if (other.tag == "Laser")
@@ -71,15 +73,17 @@ public class Enemy : MonoBehaviour
          
          if(_player != null)
          {
-              _player.AddScore(10);
+          _player.AddScore(10);
          }
 
             //trigger animation
         _anim.SetTrigger("OnEnemyDeath");
-            _speed = 0;
-         Destroy(this.gameObject, _delay);
-            _audioSource.PlayOneShot(_enemyExplode);
-            _deadEnemy.enabled = false;
+        _speed = 0;
+        _audioSource.PlayOneShot(_enemyExplode);
+        _deadEnemy.enabled = false;
+        //_audioSource.Play();
+        Destroy(this.gameObject, _delay);
+            
        }
     }
 }
