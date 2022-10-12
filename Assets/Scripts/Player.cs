@@ -6,41 +6,29 @@ public class Player : MonoBehaviour
 {
     //variables
     [SerializeField] private float _speed = 5.0f;             //using SerializeField attribute with private variables allows them to be seen in the Inspector
-    
     [SerializeField] private float _speedMultiplier = 2;
-    
-    [SerializeField] private GameObject _laserPrefab;                    // use underscore to denote private variables
-                                                                               
+    [SerializeField] private GameObject _laserPrefab;                    // use underscore to denote private variables                                                                        
     [SerializeField] private GameObject _tripleShotPrefab;
-    
     [SerializeField] private GameObject playerShield;
-   
     [SerializeField] private Vector3 _laserOffset = new Vector3(0, 1.0f, 0);
-   
     [SerializeField] private float _fireRate = 0.5f;
-   
     [SerializeField] private float _nextFire = 0; 
-    
     [SerializeField] private int _lives = 3;
-   
     [SerializeField] private int _score;
-
     [SerializeField] private GameObject _leftEngineFire;
-
     [SerializeField] private GameObject _rightEngineFire;
-
     [SerializeField] private AudioClip _laserSound;
-    [SerializeField] private AudioClip _playerExplode;
+    //[SerializeField] private AudioClip _playerExplode;
 
     private AudioSource _audioSource;
-   
-    private SpawnManager _spawnManager; 
-   
+    private SpawnManager _spawnManager;
+    private UIManager _uiManager;
+
     private bool _isTripleShotActive = false;   
     private bool _isSpeedBoostActive = false;
     private bool _isShieldActive = false;
 
-    private UIManager _uiManager;
+    
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -78,7 +66,7 @@ public class Player : MonoBehaviour
       {
         FireLaser();
       } 
-      //ShieldOn();
+    
     }   
 
     void CalculateMovement()
@@ -91,15 +79,21 @@ public class Player : MonoBehaviour
        
         if(transform.position.x > 11.3f)                                                                               // Horizontal postion wrapping
         {
-            transform.position = new Vector3(-11.3f, transform.position.y, 0);
+          transform.position = new Vector3(-11.3f, transform.position.y, 0);
         }
         else if(transform.position.x < -11.3f)
         {
-         transform.position = new Vector3(11.3f, transform.position.y, 0);
+          transform.position = new Vector3(11.3f, transform.position.y, 0);
         }
-        
-        
-        transform.Translate(move *_speed * Time.deltaTime);  
+
+        if (_isSpeedBoostActive == false)
+        {
+            transform.Translate(move * _speed * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(move * _speed * _speedMultiplier * Time.deltaTime);
+        }
        
        
     }
@@ -116,9 +110,8 @@ public class Player : MonoBehaviour
        {
          Instantiate(_laserPrefab, transform.position+_laserOffset, Quaternion.identity);
        }
-        _audioSource.Play();
+     _audioSource.Play();
     }
-    
     public void Damage()
     {   
         if(_isShieldActive == true)
@@ -147,7 +140,7 @@ public class Player : MonoBehaviour
        if (_lives == 0)
        {
          _spawnManager.OnPlayerDeath();
-         _audioSource.PlayOneShot(_playerExplode);
+        // _audioSource.PlayOneShot(_playerExplode);
          Destroy(this.gameObject);
            
 
@@ -169,7 +162,7 @@ public class Player : MonoBehaviour
     public void SpeedBoostActive()
     {
         _isSpeedBoostActive = true;
-        _speed *= _speedMultiplier;
+       // _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
 
@@ -178,7 +171,7 @@ public class Player : MonoBehaviour
            
           yield return new WaitForSeconds(5.0f);
           _isSpeedBoostActive = false;  
-          _speed /= _speedMultiplier;
+         // _speed /= _speedMultiplier;
     }
    
     
