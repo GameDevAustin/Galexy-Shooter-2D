@@ -11,10 +11,11 @@ public class Powerup : MonoBehaviour
     [SerializeField]// 0 = Triple Shot, 1 = Speed, 2 = Shield
     private int _powerupID;
 
+    
 
     void Start()
     {
-        
+       
     }
 
     void Update()
@@ -31,23 +32,22 @@ public class Powerup : MonoBehaviour
         {
           Player player = other.transform.GetComponent<Player>();
           if (player != null)
-          {       
-            switch(_powerupID)
-            {
-                case 0:
-                    player.TripleShotActive();
-                    break;
-                case 1:
-                    player.SpeedBoostActive();
-                    break;
-                case 2:
-                    Debug.Log("Shield Active");
-                    player.ShieldActive();
-                    break;
-                default:
-                    Debug.Log("Default Value");
-                    break;
-            }
+          {
+                switch (_powerupID)
+                {
+                    case 0:
+                        player.TripleShotActive();
+                        break;
+                    case 1:
+                        player.SpeedBoostActive();
+                        break;
+                    case 2:
+                        player.ShieldActive();
+                        break;
+                    default:
+                        Debug.Log("Default Value");
+                        break;
+                }
           }
           Destroy(this.gameObject);
         }

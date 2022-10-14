@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _leftEngineFire;
     [SerializeField] private GameObject _rightEngineFire;
     [SerializeField] private AudioClip _laserSound;
-    //[SerializeField] private AudioClip _playerExplode;
+    [SerializeField] private AudioClip _powerupSound;
 
     private AudioSource _audioSource;
     private SpawnManager _spawnManager;
@@ -149,7 +149,8 @@ public class Player : MonoBehaviour
     
     public void TripleShotActive()
     {
-       _isTripleShotActive = true;
+        _audioSource.PlayOneShot(_powerupSound);
+        _isTripleShotActive = true;
        StartCoroutine(TripleShotPowerDownRoutine());
     }
 
@@ -161,6 +162,7 @@ public class Player : MonoBehaviour
 
     public void SpeedBoostActive()
     {
+        _audioSource.PlayOneShot(_powerupSound);
         _isSpeedBoostActive = true;
        // _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
@@ -177,6 +179,7 @@ public class Player : MonoBehaviour
     
     public void ShieldActive()
     {
+        _audioSource.PlayOneShot(_powerupSound);
         _isShieldActive = true;       
          playerShield.SetActive(true);                                                                           // gameObject.transform.GetChild(0).gameObject.SetActive(true);
         StartCoroutine(ShieldPowerOffRoutine());
