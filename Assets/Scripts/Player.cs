@@ -18,7 +18,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _leftEngineFire;
     [SerializeField] private GameObject _rightEngineFire;
     [SerializeField] private AudioClip _laserSound;
-    [SerializeField] private AudioClip _powerupSound;
+    //[SerializeField] private AudioClip _powerupSound;
+    [SerializeField] private int _powerupTime = 5;
 
     private AudioSource _audioSource;
     private SpawnManager _spawnManager;
@@ -149,7 +150,7 @@ public class Player : MonoBehaviour
     
     public void TripleShotActive()
     {
-        _audioSource.PlayOneShot(_powerupSound);
+        //_audioSource.PlayOneShot(_powerupSound);
         _isTripleShotActive = true;
        StartCoroutine(TripleShotPowerDownRoutine());
     }
@@ -162,7 +163,7 @@ public class Player : MonoBehaviour
 
     public void SpeedBoostActive()
     {
-        _audioSource.PlayOneShot(_powerupSound);
+        //_audioSource.PlayOneShot(_powerupSound);
         _isSpeedBoostActive = true;
        // _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
@@ -179,7 +180,7 @@ public class Player : MonoBehaviour
     
     public void ShieldActive()
     {
-        _audioSource.PlayOneShot(_powerupSound);
+        //_audioSource.PlayOneShot(_powerupSound);
         _isShieldActive = true;       
          playerShield.SetActive(true);                                                                           // gameObject.transform.GetChild(0).gameObject.SetActive(true);
         StartCoroutine(ShieldPowerOffRoutine());
@@ -187,6 +188,7 @@ public class Player : MonoBehaviour
         
     IEnumerator ShieldPowerOffRoutine()
     {
+
         yield return new WaitForSeconds(5.0f);
         _isShieldActive = false;
         playerShield.SetActive(false);     
