@@ -10,4 +10,8 @@ public class MainMenu : MonoBehaviour
         //access scene manager and load game scene
         SceneManager.LoadScene(1); //game scene
     }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

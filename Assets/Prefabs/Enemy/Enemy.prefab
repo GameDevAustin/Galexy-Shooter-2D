@@ -51,7 +51,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 4
   _delay: 2.35
-  _enemyExplosion: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _laserPrefab: {fileID: 1166756813054195232, guid: a30aaf631ce13dd45920e39981ca24bb, type: 3}
+  _fireRate: 0.5
+  _nextFire: 0
+  _laserOffset: {x: 0, y: 1, z: 0}
 --- !u!212 &723821483979953126
 SpriteRenderer:
   m_ObjectHideFlags: 0
