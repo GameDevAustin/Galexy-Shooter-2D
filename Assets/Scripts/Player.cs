@@ -18,15 +18,19 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _leftEngineFire;
     [SerializeField] private GameObject _rightEngineFire;
     [SerializeField] private AudioClip _laserSound;
-   
+    [SerializeField] private int _shieldLives = 3;
+    private bool _shield;
     //[SerializeField] private int _powerupTime = 5;
-  
-   [SerializeField] private float _thrustSpeed = 3;
+
+    [SerializeField] private float _thrustSpeed = 3;
+   [SerializeField] private float _timeStamp;
+    private float _duration;
 
     private AudioSource _audioSource;
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
 
+    private SpriteRenderer _shieldColor; 
     private bool _isTripleShotActive = false;   
     private bool _isSpeedBoostActive = false;
     private bool _isShieldActive = false;
@@ -35,6 +39,7 @@ public class Player : MonoBehaviour
     void Start()
     {
      
+        _shieldColor = gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
         _audioSource = GetComponent<AudioSource>();
         _leftEngineFire.gameObject.SetActive(false);
         _rightEngineFire.gameObject.SetActive(false);
@@ -103,7 +108,7 @@ public class Player : MonoBehaviour
             transform.Translate(move * _speed * Time.deltaTime);
         }
        
-        else if (Input.GetKey(KeyCode.LeftShift))
+        else 
         {
             transform.Translate(move * _speed * _speedMultiplier * Time.deltaTime);
         }
@@ -130,9 +135,29 @@ public class Player : MonoBehaviour
     {   
         if(_isShieldActive == true)
         {
-        _isShieldActive = false;
-          playerShield.SetActive(false);                                              //gameObject.transform.GetChild(0).gameObject.SetActive(false); also works
-          return;
+            
+
+             if(_shieldLives == 3)
+            {
+                _shieldColor.color = Color.yellow;
+                _shieldLives -= 1;
+                return;
+            }
+            else if (_shieldLives == 2)
+            {
+                _shieldColor.color = Color.red;
+                _shieldLives -= 1;
+                return;
+            }
+           else if (_shieldLives <= 1)
+            {
+                _isShieldActive = false;
+                playerShield.SetActive(false);
+               
+                
+                return;
+            }
+           
         }
 
 
@@ -178,7 +203,6 @@ public class Player : MonoBehaviour
     {
         //_audioSource.PlayOneShot(_powerupSound);
         _isSpeedBoostActive = true;
-       // _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
 
@@ -194,17 +218,38 @@ public class Player : MonoBehaviour
     public void ShieldActive()
     {
         //_audioSource.PlayOneShot(_powerupSound);
-        _isShieldActive = true;       
-         playerShield.SetActive(true);                                                                           // gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        _shield = true;
+        _shieldLives = 3;
+        _shieldColor.color = Color.white;
         StartCoroutine(ShieldPowerOffRoutine());
     }
         
     IEnumerator ShieldPowerOffRoutine()
     {
+        _timeStamp = Time.time;
+        _duration = 10f;
 
-        yield return new WaitForSeconds(5.0f);
-        _isShieldActive = false;
-        playerShield.SetActive(false);     
+        if (_shield)
+        {
+           
+            _isShieldActive = true;
+            playerShield.SetActive(true);
+
+            while (Time.time < _timeStamp + _duration)
+            {
+                if (_isShieldActive == false)
+                {
+                    _isShieldActive = true;
+                    _timeStamp = Time.time;
+                }
+                yield return null;
+
+            }
+                _isShieldActive = false;
+                playerShield.SetActive(false);
+            
+        }
+        _shield = false;
     }
     
     //method to add 10 to score
