@@ -9,10 +9,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private float _fireRate = 3f;
     [SerializeField] private float _canFire = -1;
-   // private Collider2D _enemyLaser;
+  
    
     private AudioSource _audioSource;
-
+    private bool _enemyDeath = false;
 
 
     private Animator _anim; //handle to animator component
@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _player = GameObject.Find("Player").GetComponent<Player>();
         _anim = GetComponent<Animator>();
-        //_enemyLaser = GameObject.Find("Laser").GetComponent<BoxCollider2D>();
+     
 
         if (_player == null)
         {
@@ -39,22 +39,30 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         CalculateMovement();
-        FireEnemeyLaser();
+        if (_enemyDeath != true)
+        {
+            FireEnemeyLaser();
+        }
     }
     void FireEnemeyLaser()
     {
         if (Time.time > _canFire)
         {
+
+
             _fireRate = Random.Range(3f, 7f);
             _canFire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
 
+
+
             for (int i = 0; i < lasers.Length; i++)
             {
                 lasers[i].AssignEnemyLaser();
             }
-           // Debug.Break();
+
+            // Debug.Break();
         }
     }
     void CalculateMovement()
@@ -83,11 +91,13 @@ public class Enemy : MonoBehaviour
             _anim.SetTrigger("OnEnemyDeath");
             _speed = 0;
             _audioSource.Play();
+            _enemyDeath = true;
             Destroy(this.gameObject, _delay);
         }
         //checking for collision from laser 
         if (other.tag == "Laser")
         {
+           
             Destroy(other.gameObject);
             if (_player != null)
             {
@@ -98,11 +108,16 @@ public class Enemy : MonoBehaviour
             _anim.SetTrigger("OnEnemyDeath");
             _speed = 0;
             _deadEnemy.enabled = false;
-            //_enemyLaser.enabled = false;
             _audioSource.Play();
+            _enemyDeath = true;
             Destroy(this.gameObject, _delay);
           
 
+        }
+        if(other.tag == "enemyLaser")
+        {
+
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other.GetComponent<Collider2D>());
         }
     }
 }

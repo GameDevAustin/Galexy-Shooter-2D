@@ -8,7 +8,11 @@ public class Laser : MonoBehaviour
    [SerializeField]
    private float _speed = 10.0f;
     private bool _isEnemyLaser = false;
-
+    
+    private void Start()
+    {
+        
+    }
     void Update()
    {
      if(_isEnemyLaser == false)
@@ -18,6 +22,7 @@ public class Laser : MonoBehaviour
      else
         {
             MoveDown();
+           
         }
    }
     void MoveUp()
@@ -36,8 +41,8 @@ public class Laser : MonoBehaviour
     void MoveDown()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
-        if(transform.position.y < -8.0f)
+      
+        if (transform.position.y < -8.0f)
         {
             if (transform.parent != null)
             {
@@ -49,6 +54,7 @@ public class Laser : MonoBehaviour
     public void AssignEnemyLaser()
     {
         _isEnemyLaser = true;
+        
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

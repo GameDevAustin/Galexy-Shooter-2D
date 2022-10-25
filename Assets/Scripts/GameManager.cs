@@ -7,14 +7,14 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private bool _isGameOver;
-    private void Awake()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-    }
-
+    /* private void Awake()
+     {
+         if (Input.GetKeyDown(KeyCode.Escape))
+         {
+             Application.Quit();
+         }
+     }
+     */
     private void Update()
     {
 
