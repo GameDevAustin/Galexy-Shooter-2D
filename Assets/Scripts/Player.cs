@@ -18,10 +18,10 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _leftEngineFire;
     [SerializeField] private GameObject _rightEngineFire;
     [SerializeField] private AudioClip _laserSound;
-    //[SerializeField] private AudioClip _powerupSound;
-    [SerializeField] private int _powerupTime = 5;
-   // private bool _thrust;
-    private float _thrustSpeed = 3;
+   
+    //[SerializeField] private int _powerupTime = 5;
+  
+   [SerializeField] private float _thrustSpeed = 3;
 
     private AudioSource _audioSource;
     private SpawnManager _spawnManager;
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     
     void Start()
     {
-       // _thrust = Input.GetKeyDown(KeyCode.LeftShift);
+     
         _audioSource = GetComponent<AudioSource>();
         _leftEngineFire.gameObject.SetActive(false);
         _rightEngineFire.gameObject.SetActive(false);
@@ -96,14 +96,14 @@ public class Player : MonoBehaviour
         }
         else if(Input.GetKeyUp(KeyCode.LeftShift))
         {
-            _speed = 5;
+            _speed = _speed - _thrustSpeed;
         }
         if (_isSpeedBoostActive == false)
         {
             transform.Translate(move * _speed * Time.deltaTime);
         }
        
-        else
+        else if (Input.GetKey(KeyCode.LeftShift))
         {
             transform.Translate(move * _speed * _speedMultiplier * Time.deltaTime);
         }
