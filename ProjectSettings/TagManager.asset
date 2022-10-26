@@ -9,6 +9,7 @@ TagManager:
   - tripleShot
   - speed
   - Shield
+  - enemyLaser
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - UI_1
   - 
   - Post Processing
   - 

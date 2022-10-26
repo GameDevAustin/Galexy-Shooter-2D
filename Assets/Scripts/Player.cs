@@ -19,12 +19,14 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _rightEngineFire;
     [SerializeField] private AudioClip _laserSound;
     [SerializeField] private int _shieldLives = 3;
-    private bool _shield;
+    [SerializeField] private int _ammoCount = 30;
+    [SerializeField] private AudioClip _noAmmo;
     //[SerializeField] private int _powerupTime = 5;
 
     [SerializeField] private float _thrustSpeed = 3;
-   [SerializeField] private float _timeStamp;
+    [SerializeField] private float _timeStamp;
     private float _duration;
+    private bool _shield;
 
     private AudioSource _audioSource;
     private SpawnManager _spawnManager;
@@ -73,6 +75,11 @@ public class Player : MonoBehaviour
       CalculateMovement();
       if(Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)                                                   // checks if time is greater than nextFire. calls FireLaser() if true.
       {
+            if(_ammoCount <=0)
+            {
+                _audioSource.PlayOneShot(_noAmmo, 1f);
+                return;
+            }
         FireLaser();
       } 
     
@@ -116,10 +123,16 @@ public class Player : MonoBehaviour
        
        
     }
+    private void AmmoCount(int bullets)
+    {
+        _ammoCount += bullets;
+        _uiManager.UpdateAmmoCount(_ammoCount);
+    }
 
     void FireLaser()
     {
-       _nextFire = Time.time + _fireRate;
+        AmmoCount(-1);
+        _nextFire = Time.time + _fireRate;
          
        if (_isTripleShotActive == true)
        {

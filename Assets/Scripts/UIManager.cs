@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
   [SerializeField]  private TMP_Text _gameOverText;
   [SerializeField] private TMP_Text _restartLevelText;
   [SerializeField] private Sprite[] _liveSprites;
-
+  [SerializeField] private TMP_Text _ammoText;
     private GameManager _gameManager;
 
 
@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
         _gameOverText.gameObject.SetActive(false);
         _restartLevelText.gameObject.SetActive(false);
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
+        _ammoText.text = 30.ToString();
 
         if(_gameManager == null)
         {
@@ -51,7 +52,10 @@ public class UIManager : MonoBehaviour
        
 
     }
-
+    public void UpdateAmmoCount(int playerAmmo)
+    {
+        _ammoText.text = playerAmmo.ToString();
+    }
     void GameOverSequence()
     {
         _gameManager.GameOver();
@@ -69,5 +73,6 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
+   
   
 }
