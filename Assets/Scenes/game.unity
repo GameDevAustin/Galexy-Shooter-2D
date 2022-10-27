@@ -190,8 +190,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -67.06558, y: -20}
-  m_SizeDelta: {x: 138.2204, y: 27.0321}
+  m_AnchoredPosition: {x: -70.7915, y: -20.1552}
+  m_SizeDelta: {x: 130.7686, y: 27.3425}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &120910005
 MonoBehaviour:
@@ -787,7 +787,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -45.1, y: -11.4}
+  m_AnchoredPosition: {x: -40.4, y: -11.4}
   m_SizeDelta: {x: 172.478, y: 14.37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &575453499
@@ -1002,7 +1002,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 636232122}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.8411, y: -0.2399, z: 0}
+  m_LocalPosition: {x: -0.8411, y: 1.6, z: 0}
   m_LocalScale: {x: 0.7438593, y: 0.49022004, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1173,7 +1173,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -1661,7 +1661,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389870978}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.2, y: -11.2, z: 0}
+  m_LocalPosition: {x: -15.2, y: -16.82, z: 0}
   m_LocalScale: {x: 0.6450092, y: 0.91657645, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1795,7 +1795,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 333b0196b7a764df5a7768ead9b69dbc, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.8}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2575,22 +2575,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eaf0f67ff46bbe44af86c78d28b3500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
-  _speedMultiplier: 2
   _laserPrefab: {fileID: 6309360898992012296, guid: 5c5c2bbbcb016f949bacdbaac188623a, type: 3}
   _tripleShotPrefab: {fileID: 5870512574280287383, guid: cb838fa5a18015840b756669698b4d1c, type: 3}
-  playerShield: {fileID: 1403818376}
-  _laserOffset: {x: 0, y: 1.013, z: 0}
-  _fireRate: 0.15
-  _nextFire: 0
-  _lives: 3
-  _score: 0
+  _playerShield: {fileID: 1403818376}
   _leftEngineFire: {fileID: 1893028800}
   _rightEngineFire: {fileID: 735972467}
-  _laserSound: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
+  _laserOffset: {x: 0, y: 1.013, z: 0}
   _shieldLives: 0
-  _ammoCount: 30
+  _lives: 3
+  _score: 0
+  _laserSound: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _noAmmo: {fileID: 8300000, guid: 1303ab7f2ca629a4a99c5f830a1d2ec8, type: 3}
+  _fireRate: 0.15
+  _nextFire: 0
+  _speed: 5
+  _speedMultiplier: 2
   _thrustSpeed: 3
   _timeStamp: 0
 --- !u!212 &2079147884

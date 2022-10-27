@@ -7,54 +7,51 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-    //create a handle to Text
-  [SerializeField] private TMP_Text _scoreText;
-  [SerializeField] private Image _LivesImg;
-  [SerializeField]  private TMP_Text _gameOverText;
-  [SerializeField] private TMP_Text _restartLevelText;
-  [SerializeField] private Sprite[] _liveSprites;
-  [SerializeField] private TMP_Text _ammoText;
+    //handle 
+    [SerializeField] private TMP_Text _scoreText;
+    [SerializeField] private Image _LivesImg;
+    [SerializeField] private TMP_Text _gameOverText;
+    [SerializeField] private TMP_Text _restartLevelText;
+    [SerializeField] private Sprite[] _liveSprites;
+    [SerializeField] private TMP_Text _ammoText;
     private GameManager _gameManager;
-
-
-
-
-    // Start is called before the first frame update
+ 
     void Start()
     {
-        //assign text component to handle
-         _scoreText.text ="Score: " + 0;
+        _scoreText.text = "Score: " + 0;
         _gameOverText.gameObject.SetActive(false);
         _restartLevelText.gameObject.SetActive(false);
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
-        _ammoText.text = 30.ToString();
+        _ammoText.text = Player.ammoCount.ToString();
 
-        if(_gameManager == null)
+        if (_gameManager == null)
         {
             Debug.LogError("Game_Manager is NULL");
         }
     }
-
     public void UpdateScore(int playerScore)
     {
         _scoreText.text = "Score: " + playerScore;
     }
-
     public void UpdateLives(int currentLives)
     {
-        
         _LivesImg.sprite = _liveSprites[currentLives];
 
-        if (currentLives == 0)
+        if (currentLives <= 0)
         {
-          GameOverSequence();
+            GameOverSequence();
         }
-       
-
     }
     public void UpdateAmmoCount(int playerAmmo)
     {
-        _ammoText.text = playerAmmo.ToString();
+        if (playerAmmo > 0)
+        {
+           _ammoText.text = playerAmmo.ToString();
+        }
+        else if (playerAmmo == 0)
+        {
+            _ammoText.text = "00";
+        }
     }
     void GameOverSequence()
     {
@@ -73,6 +70,4 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
-   
-  
 }
