@@ -10,6 +10,7 @@ TagManager:
   - speed
   - Shield
   - enemyLaser
+  - ammo
   layers:
   - Default
   - TransparentFX

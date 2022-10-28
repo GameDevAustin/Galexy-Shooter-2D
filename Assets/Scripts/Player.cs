@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int _shieldLives = 3;
     [SerializeField] private int _lives = 3;
     [SerializeField] private int _score;
+    [SerializeField] private int _ammoUp = 15;
     public static int ammoCount;
 
     [SerializeField] private AudioClip _laserSound;
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour
     private bool _isSpeedBoostActive = false;
     private bool _isShieldActive = false;
     private bool _shield;
+    
 
     //handles
     private Color _orange = new Color(1f, 0.23f, 0f, 1f);
@@ -46,6 +48,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         ammoCount = 15;
+        
     }
     void Start()
     {
@@ -242,6 +245,11 @@ public class Player : MonoBehaviour
             _playerShield.SetActive(false);
         }
         _shield = false;
+    }
+    public void AmmoUp()
+    {
+        ammoCount += _ammoUp;
+        _uiManager.UpdateAmmoCount(ammoCount);
     }
     public void AddScore(int points)
     {
