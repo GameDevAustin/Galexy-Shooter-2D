@@ -5,12 +5,15 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     //variables
-    [SerializeField] private GameObject _ammoPrefab;
+   
     [SerializeField] private GameObject _laserPrefab;                                                                                        
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _playerShield;
     [SerializeField] private GameObject _leftEngineFire;
     [SerializeField] private GameObject _rightEngineFire;
+    [SerializeField] private GameObject _thruster;
+
+  
 
     [SerializeField] private Vector3 _laserOffset = new Vector3(0, 1.0f, 0);
 
@@ -22,6 +25,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private AudioClip _laserSound;
     [SerializeField] private AudioClip _noAmmo;
+    [SerializeField] private AudioClip _explosion;
 
 
     [SerializeField] private float _fireRate = 0.5f;
@@ -30,6 +34,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _speedMultiplier = 2;
     [SerializeField] private float _thrustSpeed = 3;
     [SerializeField] private float _timeStamp;
+    private float _delay = 2.35f;
     private float _duration;
 
     private bool _isTripleShotActive = false;
@@ -44,7 +49,8 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
     private SpriteRenderer _shieldColor;
-   
+    private Animator _anim;
+
     private void Awake()
     {
         ammoCount = 15;
@@ -57,6 +63,7 @@ public class Player : MonoBehaviour
         _leftEngineFire.gameObject.SetActive(false);
         _rightEngineFire.gameObject.SetActive(false);
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _anim = GetComponent<Animator>();
         ammoCount = 16;
 
         if (_uiManager == null)
@@ -189,8 +196,13 @@ public class Player : MonoBehaviour
 
         if (_lives == 0)
         {
+            _anim.SetTrigger("OnPlayerDeath");
+            _audioSource.PlayOneShot(_explosion);
+            _thruster.SetActive(false);
+            _leftEngineFire.SetActive(false);
+            _rightEngineFire.SetActive(false);
             _spawnManager.OnPlayerDeath();
-            Destroy(this.gameObject);
+            Destroy(this.gameObject, _delay);
 
 
         }
@@ -248,8 +260,19 @@ public class Player : MonoBehaviour
     }
     public void AmmoUp()
     {
+
         ammoCount += _ammoUp;
-        _uiManager.UpdateAmmoCount(ammoCount);
+       
+        if (ammoCount >= 99)
+        {
+            ammoCount = 99;
+            _uiManager.UpdateAmmoCount(ammoCount);
+        }
+        else
+        {
+            _uiManager.UpdateAmmoCount(ammoCount);
+        }
+
     }
     public void AddScore(int points)
     {
