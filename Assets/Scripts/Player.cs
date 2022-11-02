@@ -156,6 +156,27 @@ public class Player : MonoBehaviour
         }
         _audioSource.Play();
     }
+    public void Health()
+    {
+        if (_lives ==3)
+        {
+            return;
+        }
+        else
+        {
+            _lives++;
+            _uiManager.UpdateLives(_lives);
+            
+            if(_lives == 2)
+            {
+                _leftEngineFire.gameObject.SetActive(false);
+            }
+            else if(_lives == 3)
+            {
+                _rightEngineFire.gameObject.SetActive(false);
+            }
+        }
+    }
     public void Damage()
     {
         if (_isShieldActive == true)
