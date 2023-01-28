@@ -11,19 +11,25 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _fireRate = 3f;
     [SerializeField] private float _canFire = -1;
 
-    private bool _enemyDeath = false;
+    public bool enemyDeath = false;
+    [HideInInspector] public bool isTargeted;
+    [HideInInspector] public bool isDestroyed; 
+
 
     private Player _player;
     private Collider2D _deadEnemy;
     private Animator _anim;
     private AudioSource _audioSource;
-
+  
     void Start()
     {
+     
         _deadEnemy = GetComponent<BoxCollider2D>();
         _audioSource = GetComponent<AudioSource>();
         _player = GameObject.Find("Player").GetComponent<Player>();
         _anim = GetComponent<Animator>();
+
+        
 
         if (_player == null)
         {
@@ -36,11 +42,14 @@ public class Enemy : MonoBehaviour
     }
     void Update()
     {
+        
         CalculateMovement();
-        if (_enemyDeath != true)
+        if (enemyDeath != true)
         {
+            
             FireEnemeyLaser();
         }
+        
     }
     void FireEnemeyLaser()
     {
@@ -82,8 +91,9 @@ public class Enemy : MonoBehaviour
             _anim.SetTrigger("OnEnemyDeath");
             _speed = 0;
             _audioSource.Play();
-            _enemyDeath = true;
+            enemyDeath = true;
             _deadEnemy.enabled = false;
+            isDestroyed = true;
             Destroy(this.gameObject, _delay);
         }
         //checking for collision from laser 
@@ -99,12 +109,31 @@ public class Enemy : MonoBehaviour
             _speed = 0;
             _deadEnemy.enabled = false;
             _audioSource.Play();
-            _enemyDeath = true;
+            enemyDeath = true;
+            isDestroyed = true;
             Destroy(this.gameObject, _delay);
         }
         if (other.tag == "enemyLaser")
         {
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other.GetComponent<Collider2D>());
+        }
+        if(other.tag == "Missile")
+        {
+            Destroy(other.gameObject);
+           
+            if (_player != null)
+            {
+                _player.AddScore(10);
+            }
+
+            _anim.SetTrigger("OnEnemyDeath");
+            _speed = 0;
+            _deadEnemy.enabled = false;
+            _audioSource.Play();
+            enemyDeath = true;
+            isDestroyed = true;
+            Destroy(this.gameObject, _delay);
+            
         }
     }
 }

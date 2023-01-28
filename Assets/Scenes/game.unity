@@ -2470,7 +2470,10 @@ MonoBehaviour:
   - {fileID: 4289313789929703569, guid: 39374096578dce049be1c82a1730afc1, type: 3}
   - {fileID: 8209980877265947538, guid: 9772d33da6a57f34bbeb8d68545a36c5, type: 3}
   - {fileID: 7775915613336514049, guid: c97c2897c0b96ec4e8e4d2c494e9183a, type: 3}
+  - {fileID: 5395229410969716888, guid: 05f2c4981ca802443b450a267f7004a1, type: 3}
   _enemyContainer: {fileID: 95223134}
+  _time: 0
+  _duration: 0
 --- !u!4 &2066788818
 Transform:
   m_ObjectHideFlags: 0
@@ -2527,6 +2530,7 @@ MonoBehaviour:
   _leftEngineFire: {fileID: 1893028800}
   _rightEngineFire: {fileID: 735972467}
   _thruster: {fileID: 1093989720}
+  _missilePrefab: {fileID: 2982027157709700611, guid: c2021c6e905e6a343803f6e113f981ad, type: 3}
   _laserOffset: {x: 0, y: 1.013, z: 0}
   _shieldLives: 0
   _lives: 3
@@ -2535,12 +2539,14 @@ MonoBehaviour:
   _laserSound: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _noAmmo: {fileID: 8300000, guid: 1303ab7f2ca629a4a99c5f830a1d2ec8, type: 3}
   _explosion: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _missileAudio: {fileID: 8300000, guid: 930526de0f5568e4ead869c2d87563a6, type: 3}
   _fireRate: 0.15
   _nextFire: 0
   _speed: 5
   _speedMultiplier: 2
   _thrustSpeed: 3
   _timeStamp: 0
+  _isMissileActive: 1
 --- !u!212 &2079147884
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -5,15 +5,16 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     //variables
-   
-    [SerializeField] private GameObject _laserPrefab;                                                                                        
+
+    [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _playerShield;
     [SerializeField] private GameObject _leftEngineFire;
     [SerializeField] private GameObject _rightEngineFire;
     [SerializeField] private GameObject _thruster;
+    [SerializeField] private GameObject _missilePrefab;
 
-  
+   
 
     [SerializeField] private Vector3 _laserOffset = new Vector3(0, 1.0f, 0);
 
@@ -21,11 +22,12 @@ public class Player : MonoBehaviour
     [SerializeField] private int _lives = 3;
     [SerializeField] private int _score;
     [SerializeField] private int _ammoUp = 15;
-    public static int ammoCount;
+     public static int ammoCount;
 
     [SerializeField] private AudioClip _laserSound;
     [SerializeField] private AudioClip _noAmmo;
     [SerializeField] private AudioClip _explosion;
+    [SerializeField] private AudioClip _missileAudio;
 
 
     [SerializeField] private float _fireRate = 0.5f;
@@ -41,7 +43,7 @@ public class Player : MonoBehaviour
     private bool _isSpeedBoostActive = false;
     private bool _isShieldActive = false;
     private bool _shield;
-    
+    [SerializeField] private bool _isMissileActive = false;
 
     //handles
     private Color _orange = new Color(1f, 0.23f, 0f, 1f);
@@ -50,6 +52,7 @@ public class Player : MonoBehaviour
     private UIManager _uiManager;
     private SpriteRenderer _shieldColor;
     private Animator _anim;
+    
 
     private void Awake()
     {
@@ -65,6 +68,7 @@ public class Player : MonoBehaviour
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _anim = GetComponent<Animator>();
         ammoCount = 16;
+        
 
         if (_uiManager == null)
         {
@@ -82,6 +86,7 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Audio Source on Player is NULL");
         }
+       
         else
         {
             _audioSource.clip = _laserSound;
@@ -149,13 +154,61 @@ public class Player : MonoBehaviour
         if (_isTripleShotActive == true)
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+            _audioSource.Play();
+
+        }
+        if(_isMissileActive == true)
+        {
+            Instantiate(_missilePrefab, transform.position, Quaternion.identity);
+
+            //MissileTarget();
+            _audioSource.PlayOneShot(_missileAudio);
+            
+
+
+
+
+
+
+            /*GameObject missile = ObjectPool.SharedInstance.GetPooledObject();
+            if (missile != null)
+            {
+                missile.transform.position = this.transform.position;
+                missile.transform.rotation = this.transform.rotation;
+                missile.SetActive(true);
+                MissileTarget();
+            }
+            */
         }
         else
         {
             Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
+            _audioSource.Play();
         }
-        _audioSource.Play();
+        
+
+       
     }
+   /* private Transform MissileTarget()
+    {
+        GameObject[] targets;
+        GameObject closestTarget = null;
+        float distance;
+        float minDist = 100f;
+        targets = GameObject.FindGameObjectsWithTag("Enemy");
+        for (int i = 0; i < targets.Length; i++)
+        {
+            distance = Vector3.Distance(transform.position, targets[i].transform.position);
+            if (distance < minDist)
+            {
+                minDist = distance;
+                closestTarget = targets[i];
+            }
+        }
+        return closestTarget.transform;
+    }
+   */
+
     public void Health()
     {
         if (_lives ==3)
@@ -278,6 +331,16 @@ public class Player : MonoBehaviour
             _playerShield.SetActive(false);
         }
         _shield = false;
+    }
+    public void MissileActive()
+    {
+        _isMissileActive = true;
+        StartCoroutine(MissilePowerDownRoutine());
+    }
+    IEnumerator MissilePowerDownRoutine()
+    {
+        yield return new WaitForSeconds(8f);
+        _isMissileActive = false;
     }
     public void AmmoUp()
     {

@@ -33,5 +33,13 @@ public class Asteriod : MonoBehaviour
 
             _spawnManager.StartSpawining();
         }
+        else if(other.tag == "Missile")
+        {
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(other.gameObject);
+            Destroy(this.gameObject, 0.25f);
+
+            _spawnManager.StartSpawining();
+        }
     }
 }
