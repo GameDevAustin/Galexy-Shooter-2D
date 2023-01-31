@@ -136,4 +136,14 @@ public class Enemy : MonoBehaviour
             
         }
     }
+    public void Destroy()
+    {
+        _anim.SetTrigger("OnEnemyDeath");
+        _speed = 0;
+        _deadEnemy.enabled = false;
+        _audioSource.Play();
+        enemyDeath = true;
+        isDestroyed = true;
+        Destroy(this.gameObject, _delay);
+    }
 }

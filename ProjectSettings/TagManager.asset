@@ -11,6 +11,8 @@ TagManager:
   - Shield
   - enemyLaser
   - ammo
+  - Missile
+  - Nuke
   layers:
   - Default
   - TransparentFX

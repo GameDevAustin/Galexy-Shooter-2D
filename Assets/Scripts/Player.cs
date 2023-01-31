@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int _lives = 3;
     [SerializeField] private int _score;
     [SerializeField] private int _ammoUp = 15;
-     public static int ammoCount;
+    [SerializeField] public static int ammoCount;
 
     [SerializeField] private AudioClip _laserSound;
     [SerializeField] private AudioClip _noAmmo;
@@ -43,7 +43,8 @@ public class Player : MonoBehaviour
     private bool _isSpeedBoostActive = false;
     private bool _isShieldActive = false;
     private bool _shield;
-    [SerializeField] private bool _isMissileActive = false;
+    //[SerializeField] private bool _isMissileActive = false;
+    private bool _isNukeActive = false;
 
     //handles
     private Color _orange = new Color(1f, 0.23f, 0f, 1f);
@@ -104,6 +105,15 @@ public class Player : MonoBehaviour
             }
             FireLaser();
         }
+        else if (Input.GetKeyDown(KeyCode.M) && Time.time > _nextFire)
+        {
+            if (ammoCount <= 0)
+            {
+                _audioSource.PlayOneShot(_noAmmo, 1f);
+                return;
+            }
+            FireMissile();
+        }
     }
     void CalculateMovement()
     {
@@ -157,58 +167,26 @@ public class Player : MonoBehaviour
             _audioSource.Play();
 
         }
-        if(_isMissileActive == true)
+     /*   if (_isMissileActive == true)
         {
             Instantiate(_missilePrefab, transform.position, Quaternion.identity);
 
-            //MissileTarget();
             _audioSource.PlayOneShot(_missileAudio);
-            
-
-
-
-
-
-
-            /*GameObject missile = ObjectPool.SharedInstance.GetPooledObject();
-            if (missile != null)
-            {
-                missile.transform.position = this.transform.position;
-                missile.transform.rotation = this.transform.rotation;
-                missile.SetActive(true);
-                MissileTarget();
-            }
-            */
         }
+        */
         else
         {
             Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
             _audioSource.Play();
-        }
-        
-
-       
+        }       
     }
-   /* private Transform MissileTarget()
+    void FireMissile()
     {
-        GameObject[] targets;
-        GameObject closestTarget = null;
-        float distance;
-        float minDist = 100f;
-        targets = GameObject.FindGameObjectsWithTag("Enemy");
-        for (int i = 0; i < targets.Length; i++)
-        {
-            distance = Vector3.Distance(transform.position, targets[i].transform.position);
-            if (distance < minDist)
-            {
-                minDist = distance;
-                closestTarget = targets[i];
-            }
-        }
-        return closestTarget.transform;
+        AmmoCount();
+        _nextFire = Time.time + _fireRate;
+        Instantiate(_missilePrefab, transform.position, Quaternion.identity);
+        _audioSource.PlayOneShot(_missileAudio);
     }
-   */
-
     public void Health()
     {
         if (_lives ==3)
@@ -332,7 +310,7 @@ public class Player : MonoBehaviour
         }
         _shield = false;
     }
-    public void MissileActive()
+  /*  public void MissileActive()
     {
         _isMissileActive = true;
         StartCoroutine(MissilePowerDownRoutine());
@@ -342,6 +320,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(8f);
         _isMissileActive = false;
     }
+    */
     public void AmmoUp()
     {
 
@@ -358,6 +337,18 @@ public class Player : MonoBehaviour
         }
 
     }
+    public void Nuke()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (var enemy in enemies)
+        {
+            Enemy target = enemy.GetComponent<Enemy>();
+            target.Destroy();
+        }
+
+    }
+    
     public void AddScore(int points)
     {
         _score += points;

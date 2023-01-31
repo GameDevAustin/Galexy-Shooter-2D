@@ -2471,6 +2471,7 @@ MonoBehaviour:
   - {fileID: 8209980877265947538, guid: 9772d33da6a57f34bbeb8d68545a36c5, type: 3}
   - {fileID: 7775915613336514049, guid: c97c2897c0b96ec4e8e4d2c494e9183a, type: 3}
   - {fileID: 5395229410969716888, guid: 05f2c4981ca802443b450a267f7004a1, type: 3}
+  - {fileID: 7091825291855113123, guid: bbb00482a1550ee4fbe6917c6449a360, type: 3}
   _enemyContainer: {fileID: 95223134}
   _time: 0
   _duration: 0
@@ -2533,9 +2534,9 @@ MonoBehaviour:
   _missilePrefab: {fileID: 2982027157709700611, guid: c2021c6e905e6a343803f6e113f981ad, type: 3}
   _laserOffset: {x: 0, y: 1.013, z: 0}
   _shieldLives: 0
-  _lives: 3
+  _lives: 100
   _score: 0
-  _ammoUp: 15
+  _ammoUp: 99
   _laserSound: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _noAmmo: {fileID: 8300000, guid: 1303ab7f2ca629a4a99c5f830a1d2ec8, type: 3}
   _explosion: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}

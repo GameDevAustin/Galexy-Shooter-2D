@@ -29,7 +29,7 @@ public class Powerup : MonoBehaviour
         {
             AudioSource.PlayClipAtPoint(_clip, transform.position);
             Player player = other.transform.GetComponent<Player>();
-
+            Enemy enemy = transform.GetComponent<Enemy>();
             if (player != null)
             {
                 switch (_powerupID)
@@ -49,8 +49,11 @@ public class Powerup : MonoBehaviour
                     case 4:
                         player.Health();
                         break;
-                    case 5:
-                        player.MissileActive();
+                   // case 5:
+                     //   player.MissileActive();
+                    //    break;
+                    case 6:   
+                        player.Nuke();
                         break;
                     default:
                         Debug.Log("Default Value");
