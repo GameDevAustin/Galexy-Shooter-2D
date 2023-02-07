@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Player : MonoBehaviour
 {
     //variables
@@ -14,7 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _thruster;
     [SerializeField] private GameObject _missilePrefab;
 
-   
+
 
     [SerializeField] private Vector3 _laserOffset = new Vector3(0, 1.0f, 0);
 
@@ -23,18 +24,25 @@ public class Player : MonoBehaviour
     [SerializeField] private int _score;
     [SerializeField] private int _ammoUp = 15;
     [SerializeField] public static int ammoCount;
+    [SerializeField] private int _coreTempIncrease;
+    [SerializeField] private int _coreTempDecrease;
+    public int maxTemp = 1000;
+    public int currentTemp = 0;
 
     [SerializeField] private AudioClip _laserSound;
     [SerializeField] private AudioClip _noAmmo;
     [SerializeField] private AudioClip _explosion;
     [SerializeField] private AudioClip _missileAudio;
+    [SerializeField] private AudioClip _criticalWarning;
+    [SerializeField] private AudioClip _tempExceeded;
+    [SerializeField] private AudioClip _tempNormal;
 
 
     [SerializeField] private float _fireRate = 0.5f;
     [SerializeField] private float _nextFire = 0;
     [SerializeField] private float _speed = 5.0f;
     [SerializeField] private float _speedMultiplier = 2;
-    [SerializeField] private float _thrustSpeed = 3;
+    [SerializeField] private float _thrustSpeed = 10;
     [SerializeField] private float _timeStamp;
     private float _delay = 2.35f;
     private float _duration;
@@ -43,8 +51,12 @@ public class Player : MonoBehaviour
     private bool _isSpeedBoostActive = false;
     private bool _isShieldActive = false;
     private bool _shield;
-    //[SerializeField] private bool _isMissileActive = false;
     private bool _isNukeActive = false;
+    public bool canUseThrusters = false;
+    public bool tempWanring = false;
+    public bool resetTempWarning = false;
+    [SerializeField] private bool _coreCoolDown = true;
+    [SerializeField] private bool _hasCooledDown = true;
 
     //handles
     private Color _orange = new Color(1f, 0.23f, 0f, 1f);
@@ -53,7 +65,7 @@ public class Player : MonoBehaviour
     private UIManager _uiManager;
     private SpriteRenderer _shieldColor;
     private Animator _anim;
-    
+    public ThrusterBar thrusterBar;
 
     private void Awake()
     {
@@ -62,13 +74,18 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+       thrusterBar = GameObject.Find("Canvas").GetComponentInChildren<ThrusterBar>();
         _shieldColor = gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
         _audioSource = GetComponent<AudioSource>();
         _leftEngineFire.gameObject.SetActive(false);
         _rightEngineFire.gameObject.SetActive(false);
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _anim = GetComponent<Animator>();
-        ammoCount = 16;
+        ammoCount = 15;
+        currentTemp = 0;
+        thrusterBar.SetDefaultValue(currentTemp);
+        canUseThrusters = true;
+
         
 
         if (_uiManager == null)
@@ -96,13 +113,15 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)                                                   // checks if time is greater than nextFire. calls FireLaser() if true.
+        CalculateThrusterBar();
+        ThrusterLogic();
+        if (Input.GetKey(KeyCode.Space) && Time.time > _nextFire)                                                   // checks if time is greater than nextFire. calls FireLaser() if true.
         {
-            if (ammoCount <= 0)
+           /*if (ammoCount <= 0)
             {
                 _audioSource.PlayOneShot(_noAmmo, 1f);
                 return;
-            }
+            }*/
             FireLaser();
         }
         else if (Input.GetKeyDown(KeyCode.M) && Time.time > _nextFire)
@@ -130,14 +149,14 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(11.3f, transform.position.y, 0);
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        /*if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             _speed = _speed + _thrustSpeed;
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             _speed = _speed - _thrustSpeed;
-        }
+        }*/
         if (_isSpeedBoostActive == false)
         {
             transform.Translate(move * _speed * Time.deltaTime);
@@ -150,6 +169,130 @@ public class Player : MonoBehaviour
 
 
     }
+    void CalculateThrusterBar()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && _hasCooledDown && canUseThrusters)
+        {
+            ThrustersOn(5);
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            ThrustersOff();
+        }
+    }
+    void ThrusterLogic()
+    {
+        if (currentTemp > 0 && _coreCoolDown == true && canUseThrusters == true)
+        {
+            currentTemp -= _coreTempDecrease;
+            thrusterBar.SetDefaultValue(currentTemp);
+        }
+        if (currentTemp > 6000 && _coreCoolDown == true && canUseThrusters == true)
+        {
+            _uiManager.CriticalWarning(true);
+            if (resetTempWarning == false)
+            {
+                resetTempWarning = true;
+                StartCoroutine(PlayCriticalWarning());
+            }
+        }
+        else
+        {
+            _uiManager.CriticalWarning(false);
+        }
+        if (currentTemp >= 9999 && _coreCoolDown == true && canUseThrusters == true)
+        {
+            StartCoroutine(PlayEngineShutdown());
+            _coreCoolDown = false;
+            canUseThrusters = false;
+
+            //EngineShutdownDrifting();
+            _uiManager.EngineShutdown(true);
+
+        }
+        if (currentTemp > 2500 && _coreCoolDown == false)
+        {
+            currentTemp -= _coreTempDecrease;
+            thrusterBar.SetDefaultValue(currentTemp);
+
+            //EngineShutdownDrifting();
+        }
+        if (currentTemp == 2500 && _coreCoolDown == false && canUseThrusters == false)
+        {
+            _coreCoolDown = true;
+            canUseThrusters = true;
+            _uiManager.EngineShutdown(false);
+            currentTemp -= _coreTempDecrease;
+            thrusterBar.SetDefaultValue(currentTemp);
+
+            // _playerThrusterLeft.SetAcitve(true);
+            // _playerThrusterRight.SetActive(true);
+
+            _speed = 5.0f;
+            //_uiManager.EngineStable(true);
+
+            /*if (transform.rotation.z != 0)
+            {
+                StartCoroutine(RotateForward(this.transform, Quaternion.identity, 1f));
+            }*/
+        }
+
+    }
+    void EngineShutdownDrifting()
+    {
+        //_playerThrusterLeft.GameObject.SetActive(false);
+        //_playerThrusterRight.GameObject.SetActive(false);
+        _nextFire = Time.time + 10f;
+        _speed = 0.25f;
+        transform.Rotate(Vector3.forward * -50f * Time.deltaTime);
+    }
+    void ThrustersOn(int tempIncrease)
+    {
+        currentTemp += tempIncrease;
+        thrusterBar.SetDefaultValue(currentTemp);
+        if (currentTemp > maxTemp)
+        {
+            currentTemp = maxTemp;
+        }
+        _speed = _thrustSpeed;
+    }  
+    IEnumerator PlayCriticalWarning()
+    {
+       // _audioSource.PlayOneShot(_criticalWarning);
+        yield return new WaitForSeconds(3.0f);
+        resetTempWarning = false;
+    }
+    IEnumerator PlayEngineShutdown()
+    {
+        _audioSource.Stop();
+        _audioSource.PlayOneShot(_tempExceeded);
+        yield return new WaitForSeconds(5.0f);
+    }
+    IEnumerator RotateForward(Transform target, Quaternion rot, float dur)
+    {
+        //PlayClip(_tempNormal);
+
+        float t = 0f;
+        Quaternion start = target.rotation;
+        while (t < dur)
+        {
+            target.rotation = Quaternion.Slerp(start, rot, t / dur);
+            yield return null;
+            t += Time.deltaTime;
+        }
+        target.rotation = rot;
+        _nextFire = Time.time;
+        _uiManager.EngineStable(false);
+    }
+
+    void ThrustersOff()
+    {
+        _speed = 5.0f;
+        if (_isSpeedBoostActive)
+        {
+            _speed *= _thrustSpeed;
+        }
+    }
     private void AmmoCount()
     {
        -- ammoCount;
@@ -157,9 +300,9 @@ public class Player : MonoBehaviour
     }
     void FireLaser()
     {
-        AmmoCount();
-       
-        _nextFire = Time.time + _fireRate;
+       // AmmoCount();
+       //--ammoCount;
+          _nextFire = Time.time + _fireRate;
 
         if (_isTripleShotActive == true)
         {
