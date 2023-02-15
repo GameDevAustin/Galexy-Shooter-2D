@@ -11,7 +11,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float _time;
     [SerializeField] private int _duration;
     private bool _stopSpawn = false;
-    private bool _missileSpawn = false;
     private bool _nukeSpawn = false;
 
 
@@ -46,28 +45,18 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         while (_stopSpawn == false)
         {
-            int missilePowerup = 5;
-            int nuke = 6;
+            
+            int nuke = 4;
             _time = Time.time;
-            _duration = 10;
-            Vector3 postToSpawn = new Vector3(Random.Range(-9.45f, 9.45f), 7.4f, 0);
-            int randomPowerUp = Random.Range(0, 5);
+            _duration = 12;
 
+            Vector3 postToSpawn = new Vector3(Random.Range(-9.45f, 9.45f), 7.4f, 0);
+            int randomPowerUp = Random.Range(0, 4);
             Instantiate(powerups[randomPowerUp], postToSpawn, Quaternion.identity);
             yield return new WaitForSeconds(Random.Range(3, 8));
-            _missileSpawn = true;
+
             _nukeSpawn = true;
 
-            /*if (_missileSpawn)
-            {
-                while (Time.time < _time + _duration)
-                {
-                    yield return null;
-                }
-
-                Instantiate(powerups[missilePowerup], postToSpawn, Quaternion.identity);
-            }
-            */
             if (_nukeSpawn)
             {
                 while (Time.time < _time + _duration)
