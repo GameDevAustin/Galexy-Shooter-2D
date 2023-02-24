@@ -7,19 +7,20 @@ public class ShakeCamera : MonoBehaviour
     public bool start = false;
     public float duration = 1f;
     public AnimationCurve curve; //creates animation curve. can be adjusted from the inspector.
+
     void Update()
     {
-         if (start)
+        if (start)
         {
             start = false;
             StartCoroutine(StartShake());
         }
         
     }
+
     public IEnumerator StartShake ()
     {
         Vector3 originalPos = transform.position;
-
         float elapsedTime = 0f;
         
         while (elapsedTime < duration)

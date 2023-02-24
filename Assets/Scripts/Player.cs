@@ -92,7 +92,6 @@ public class Player : MonoBehaviour
         isAlive = true;
 
 
-
         if (_uiManager == null)
         {
             Debug.LogError("UI Manager is null");
@@ -105,21 +104,23 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("The Spawn Manager is NULL");
         }
+
         if (_audioSource == null)
         {
             Debug.LogError("Audio Source on Player is NULL");
         }
-
         else
         {
             _audioSource.clip = _laserSound;
         }
     }
+
     void Update()
     {
         CalculateMovement();
         CalculateThrusterBar();
         ThrusterLogic();
+
         if (Input.GetKey(KeyCode.Space) && Time.time > _nextFire)                                                   // checks if time is greater than nextFire. calls FireLaser() if true.
         {
             if (ammoCount <= 0)
@@ -138,13 +139,13 @@ public class Player : MonoBehaviour
             }
             FireMissile();
         }
-        
-        
     }
+
     void CalculateMovement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
+
         Vector3 move = new Vector3(horizontalInput, verticalInput, 0);
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);        // use clamping function in place of if statements to set boundries where possible // combines Horizontaland Vertical translation to one line
 
@@ -168,10 +169,8 @@ public class Player : MonoBehaviour
                 transform.Translate(move * _speed * _speedMultiplier * Time.deltaTime);
             }
         }
-
-
-
     }
+
     void CalculateThrusterBar()
     {
         if (Input.GetKey(KeyCode.LeftShift) && _hasCooledDown && canUseThrusters)
