@@ -176,6 +176,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && _hasCooledDown && canUseThrusters)
         {
             ThrustersOn(5);
+            _uiManager.EngineStable(false);
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
@@ -231,7 +232,7 @@ public class Player : MonoBehaviour
             // _playerThrusterRight.SetActive(true);
 
             _speed = 5.0f;
-            //_uiManager.EngineStable(true);
+            _uiManager.EngineStable(true);
 
             /*if (transform.rotation.z != 0)
             {
@@ -266,8 +267,8 @@ public class Player : MonoBehaviour
     }
     IEnumerator PlayEngineShutdown()
     {
-        _audioSource.Stop();
-        _audioSource.PlayOneShot(_tempExceeded);
+       // _audioSource.Stop();
+       // _audioSource.PlayOneShot(_tempExceeded);
         yield return new WaitForSeconds(5.0f);
     }
     IEnumerator RotateForward(Transform target, Quaternion rot, float dur)      //Future Implementation. method for making player spin out of control when engines overheat.
