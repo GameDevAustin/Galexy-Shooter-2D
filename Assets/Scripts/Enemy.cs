@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _delay = 2.35f;
     [SerializeField] private float _fireRate = 3f;
     [SerializeField] private float _canFire = -1;
+ 
 
     public bool enemyDeath = false;
     [HideInInspector] public bool isTargeted;
@@ -20,16 +21,19 @@ public class Enemy : MonoBehaviour
     private Collider2D _deadEnemy;
     private Animator _anim;
     private AudioSource _audioSource;
-  
+    private enum MovementType { SideToSide, Circular, AngledEntry }
+    private MovementType _selectedMovement;
+
+
     void Start()
     {
-     
+
         _deadEnemy = GetComponent<BoxCollider2D>();
         _audioSource = GetComponent<AudioSource>();
         _player = GameObject.Find("Player").GetComponent<Player>();
         _anim = GetComponent<Animator>();
 
-        
+
 
         if (_player == null)
         {
@@ -38,6 +42,24 @@ public class Enemy : MonoBehaviour
         if (_anim == null)
         {
             Debug.LogError("Animator is null");
+        }
+
+        _selectedMovement = (MovementType)Random.Range(0, System.Enum.GetValues(typeof(MovementType)).Length);
+
+        switch (_selectedMovement)
+        {
+            case MovementType.SideToSide:
+                GetComponent<SideToSideMovement>().enabled = true;
+                break;
+
+            case MovementType.Circular:
+                GetComponent<CircularMovement>().enabled = true;
+                break;
+
+            case MovementType.AngledEntry:
+                GetComponent<AngledEntryMovement>().enabled = true;
+                break;
+
         }
     }
     void Update()
@@ -75,6 +97,8 @@ public class Enemy : MonoBehaviour
         {
             transform.position = new Vector3(Random.Range(-9.45f, 9.45f), 7.4f, 0);
         }
+
+
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

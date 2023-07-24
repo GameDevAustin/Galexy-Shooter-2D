@@ -1,0 +1,12 @@
+{
+    "name": "com.solacevision.assistant",
+    "version": "1.0.0",
+    "description": "Solace Vision is an AI assistant for game development powered by natural language.",
+    "displayName": "Solace Vision",
+    "unity": "2021.3",
+    "dependencies": {
+        "com.unity.editorcoroutines": "1.0.0"
+    },
+    "documentationUrl": "https://solace-vision.gitbook.io/documentation/introduction/welcome",
+    "licenseUrl": "https://www.termsfeed.com/live/8c2e4496-600b-44ef-9a95-895318d4be51"
+}

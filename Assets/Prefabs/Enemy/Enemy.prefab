@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3107367599192634394}
   - component: {fileID: -5784094277121285613}
+  - component: {fileID: 5425650693239500312}
+  - component: {fileID: 8354725033565877639}
+  - component: {fileID: 5420898951682217079}
   - component: {fileID: 723821483979953126}
   - component: {fileID: -2518653535758542306}
   - component: {fileID: 1982319457278763745}
@@ -46,14 +49,59 @@ MonoBehaviour:
   m_GameObject: {fileID: 896750893767714241}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8648455f5dfbd7d469cc7686c99be3f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ec3ebddcaf892149ad8398655c28247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _laserPrefab: {fileID: 1166756813054195232, guid: a30aaf631ce13dd45920e39981ca24bb, type: 3}
   _speed: 4
   _delay: 2.35
-  _laserPrefab: {fileID: 1166756813054195232, guid: a30aaf631ce13dd45920e39981ca24bb, type: 3}
-  _fireRate: 0.5
+  _fireRate: 3
   _canFire: -1
+  enemyDeath: 0
+  isTargeted: 0
+  isDestroyed: 0
+--- !u!114 &5425650693239500312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896750893767714241}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb5857bee9a31e44e8f64217a44585d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  movementRange: 8
+--- !u!114 &8354725033565877639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896750893767714241}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c27eef0f85cc2784eb4957dc51c230fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 2
+  radius: 8
+--- !u!114 &5420898951682217079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896750893767714241}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c8be2653ff353479c7442b7f18e2fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 4
+  entryAngle: 45
 --- !u!212 &723821483979953126
 SpriteRenderer:
   m_ObjectHideFlags: 0
